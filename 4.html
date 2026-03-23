@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鎌倉下見旅行プラン 3/24-28 v4</title>
+<style>
+  :root {
+    --primary: #1565c0;
+    --primary-light: #e3f2fd;
+    --accent: #ff8f00;
+    --accent-light: #fff8e1;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --text: #333333;
+    --text-light: #666666;
+    --border: #e0e0e0;
+    --sun: #f9a825;
+    --cloud: #78909c;
+    --rain: #5c6bc0;
+    --green: #2e7d32;
+    --green-light: #e8f5e9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding-bottom: 40px;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #1565c0 0%, #42a5f5 50%, #0d47a1 100%);
+    color: white;
+    padding: 32px 20px 28px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+  .hero .subtitle { font-size: 14px; opacity: 0.9; }
+  .hero .date { font-size: 12px; opacity: 0.7; margin-top: 6px; }
+
+  .section { padding: 20px 16px; }
+
+  .day-card {
+    background: var(--card);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .day-header {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .day-date {
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    background: var(--primary);
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .day-theme {
+    font-size: 15px;
+    font-weight: 700;
+    flex: 1;
+  }
+  .day-weather {
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .weather-sun { background: #fff8e1; color: #f57f17; }
+  .weather-cloud { background: #eceff1; color: #546e7a; }
+  .weather-rain { background: #e8eaf6; color: #3949ab; }
+
+  .day-body { padding: 14px 16px; }
+
+  .schedule-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f8f8f8;
+  }
+  .schedule-item:last-child { border-bottom: none; }
+
+  .schedule-time {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    width: 44px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .schedule-content { flex: 1; }
+  .schedule-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .schedule-detail {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  .schedule-who {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-top: 3px;
+  }
+  .who-all { background: var(--primary-light); color: var(--primary); }
+  .who-self { background: #fff3e0; color: #e65100; }
+  .who-family { background: #fce4ec; color: #c62828; }
+
+  .spot-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    margin-right: 4px;
+    margin-top: 3px;
+  }
+  .tag-school { background: var(--green-light); color: var(--green); }
+  .tag-marina { background: #e3f2fd; color: #1565c0; }
+  .tag-food { background: #fff8e1; color: #f57f17; }
+  .tag-play { background: #fce4ec; color: #c62828; }
+  .tag-estate { background: #f3e5f5; color: #6a1b9a; }
+  .tag-work { background: #eceff1; color: #546e7a; }
+  .tag-inter { background: #e0f2f1; color: #00695c; }
+
+  .reserve-section {
+    background: var(--accent-light);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .reserve-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .reserve-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    font-size: 13px;
+    gap: 8px;
+  }
+  .reserve-item:last-child { border-bottom: none; }
+  .reserve-name { font-weight: 600; flex: 1; }
+  .reserve-when {
+    font-size: 11px;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+  .reserve-status {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .status-urgent { background: #ffebee; color: #c62828; }
+  .status-soon { background: #fff3e0; color: #e65100; }
+  .status-ok { background: #e8f5e9; color: #2e7d32; }
+
+  .school-section {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .school-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--green-light);
+  }
+  .school-card {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .school-card:last-child { border-bottom: none; }
+  .school-name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .school-city {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 8px;
+    color: white;
+    margin-left: 4px;
+  }
+  .city-kamakura { background: #2e7d32; }
+  .city-hayama { background: #6a1b9a; }
+  .school-info {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .marina-section {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .marina-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  .marina-card {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .marina-card:last-child { border-bottom: none; }
+  .marina-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .marina-price {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .marina-info {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .note-box {
+    background: var(--primary-light);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--primary);
+  }
+  .note-box strong { color: #0d47a1; }
+
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: #999;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>鎌倉・葉山 下見旅行</h1>
+  <div class="subtitle">引っ越し候補地の学校・マリーナ・街の雰囲気チェック</div>
+  <div class="date">2026年3月24日(火) 〜 28日(土) / 家族4人</div>
+</div>
+
+<div class="section">
+
+  <!-- DAY 1 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-date">3/24 火</span>
+      <span class="day-theme">移動日</span>
+      <span class="day-weather weather-sun">晴→曇 16℃</span>
+    </div>
+    <div class="day-body">
+      <div class="schedule-item">
+        <div class="schedule-time">9:00</div>
+        <div class="schedule-content">
+          <div class="schedule-title">名古屋 出発</div>
+          <div class="schedule-detail">新東名経由（SA/PAの子連れ設備が充実）</div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">10:30</div>
+        <div class="schedule-content">
+          <div class="schedule-title">休憩1: NEOPASA浜松</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-play">キッズスペース・ミニクライミング</span><br>
+            浜松餃子・うなぎ系メニュー。授乳室完備<br>
+            <strong>20〜30分</strong>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">12:30</div>
+        <div class="schedule-content">
+          <div class="schedule-title">休憩2: NEOPASA静岡 ← ランチ</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-food">ランチタイム</span><br>
+            静岡おでん、富士宮やきそば、海鮮丼など。お子様メニューあり<br>
+            ベビーカー貸出あり<br>
+            <strong>45〜60分</strong>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">15:00</div>
+        <div class="schedule-content">
+          <div class="schedule-title">休憩3: NEOPASA駿河湾沼津</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-play">展望デッキから富士山+駿河湾ビュー</span><br>
+            フードコートにキッズスペース＆子連れ専用コーナーあり<br>
+            <strong>20〜30分</strong>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">16:30</div>
+        <div class="schedule-content">
+          <div class="schedule-title">鎌倉到着</div>
+          <div class="schedule-detail">宿にチェックイン。ゆっくり休む</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-date">3/25 水</span>
+      <span class="day-theme">鎌倉DAY</span>
+      <span class="day-weather weather-cloud">曇一時雨 14℃</span>
+    </div>
+    <div class="day-body">
+      <div class="schedule-item">
+        <div class="schedule-time">9:00</div>
+        <div class="schedule-content">
+          <div class="schedule-title">御成不動産（賃貸相談）</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-estate">御成不動産</span>（鎌倉駅西口 徒歩2分）営業 9:00〜17:00 / 火・祝休
+          </div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">11:00</div>
+        <div class="schedule-content">
+          <div class="schedule-title">コスモスインター鎌倉校 見学 ★予約済</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-inter">コスモスインター鎌倉校</span>（鎌倉市雪ノ下）
+          </div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">昼</div>
+        <div class="schedule-content">
+          <div class="schedule-title">ランチ → 学区散策</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-food">ランチ</span><br>
+            <span class="spot-tag tag-school">稲村ヶ崎小</span><span class="spot-tag tag-school">七里ヶ浜小</span> 学区の街歩き・住環境チェック
+          </div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">午後</div>
+        <div class="schedule-content">
+          <div class="schedule-title">海遊び / ミーティング</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-play">由比ヶ浜で海遊び</span><span class="schedule-who who-family">妻+子供</span><br>
+            <span class="spot-tag tag-work">14:00〜 クライアントMTG（Google Meet）★確定</span><span class="schedule-who who-self">自分</span><br>
+            鎌倉駅周辺のWiFiカフェで
+          </div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">夜</div>
+        <div class="schedule-content">
+          <div class="schedule-title">ディナー</div>
+          <span class="spot-tag tag-food">しらすや腰越</span>
+          <div class="schedule-detail">腰越漁港前。生しらす解禁直後。カジュアル子連れOK</div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-date">3/26 木</span>
+      <span class="day-theme">葉山DAY（室内中心）</span>
+      <span class="day-weather weather-rain">雨 60-90% 18℃</span>
+    </div>
+    <div class="day-body">
+      <div class="schedule-item">
+        <div class="schedule-time">10:00</div>
+        <div class="schedule-content">
+          <div class="schedule-title">葉山インターナショナルスクール 見学 ★予約済</div>
+          <span class="spot-tag tag-inter">葉山インター</span>
+          <div class="schedule-detail">2歳〜。今後の入園に向けた見学・相談。送迎バスあり</div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">昼</div>
+        <div class="schedule-content">
+          <div class="schedule-title">COCO-HOUSE 葉山店（賃貸相談）</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-estate">COCO-HOUSE</span>（葉山町長柄）で賃貸相談 → ランチ
+          </div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">午後後半</div>
+        <div class="schedule-content">
+          <div class="schedule-title">子連れスポット or ゆっくり</div>
+          <div class="schedule-detail">
+            候補（雨でもOK）:<br>
+            <span class="spot-tag tag-play">葉山しおさい博物館</span> 御用邸隣。魚・貝の展示+日本庭園。300円<br>
+            <span class="spot-tag tag-play">葉山児童館</span> 一色エリア。無料。乳幼児OK<br>
+            <span class="spot-tag tag-play">キドキド テラスモール湘南</span> 藤沢。車30分。ボールプール・1歳専用エリアあり。鉄板<br>
+            or <span class="spot-tag tag-work">カフェで仕事</span>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">夜</div>
+        <div class="schedule-content">
+          <div class="schedule-title">ディナー</div>
+          <span class="spot-tag tag-food">ラサーラ葉山</span>
+          <div class="schedule-detail">完全貸切イタリアン。キッズコースあり。1歳児OK。雨でも最高の体験</div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-date">3/27 金</span>
+      <span class="day-theme">葉山学校 + マリーナ</span>
+      <span class="day-weather weather-cloud">曇→晴 19℃</span>
+    </div>
+    <div class="day-body">
+      <div class="schedule-item">
+        <div class="schedule-time">午前</div>
+        <div class="schedule-content">
+          <div class="schedule-title">葉山 公立小学校の学区散策</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-school">一色小</span><span class="spot-tag tag-school">長柄小</span><br>
+            一色海岸・御用邸周辺 → 長柄エリアへ。<br>
+            街の雰囲気・住環境をチェック
+          </div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">昼</div>
+        <div class="schedule-content">
+          <div class="schedule-title">ランチ</div>
+          <span class="spot-tag tag-food">ランチ</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">午後</div>
+        <div class="schedule-content">
+          <div class="schedule-title">マリーナ見学 2箇所 + 海遊び</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-marina">油壺京急マリーナ</span> 月6.8万円(24ft)。施設充実。バランス型 → 荒井浜・横堀海岸で遊ぶ<br>
+            <span class="spot-tag tag-marina">佐島マリーナ</span> 陸置 月6万円〜。ガントリークレーン完備。塩害軽減 → 天神島で磯遊び（徒歩1分）<br>
+            2箇所は車で15分。子供はマリーナで船を見て、近くの海岸で遊べる
+          </div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">夜</div>
+        <div class="schedule-content">
+          <div class="schedule-title">ディナー</div>
+          <span class="spot-tag tag-food">鉢の木 新館 or カンティーナ</span>
+          <div class="schedule-detail">鉢の木: 北鎌倉の懐石、座敷あり / カンティーナ: 逗子海岸のイタリアン、広々</div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-date">3/28 土</span>
+      <span class="day-theme">海遊び + 帰宅</span>
+      <span class="day-weather weather-cloud">曇/不安定 19℃</span>
+    </div>
+    <div class="day-body">
+      <div class="schedule-item">
+        <div class="schedule-time">午前</div>
+        <div class="schedule-content">
+          <div class="schedule-title">海で遊ぶ</div>
+          <span class="spot-tag tag-play">一色海岸 or 由比ヶ浜</span>
+          <div class="schedule-detail">天気次第で海遊び。朝の様子を見て判断</div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">11:00</div>
+        <div class="schedule-content">
+          <div class="schedule-title">鎌倉 出発 → 名古屋へ</div>
+          <span class="schedule-who who-all">全員</span>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">12:30</div>
+        <div class="schedule-content">
+          <div class="schedule-title">休憩1: NEOPASA駿河湾沼津（上り）← ランチ</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-food">ランチ</span> 富士山ビュー展望デッキ。海鮮・ラーメン<br>
+            <strong>45〜60分</strong>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">15:00</div>
+        <div class="schedule-content">
+          <div class="schedule-title">休憩2: NEOPASA静岡 or 清水（上り）</div>
+          <div class="schedule-detail">
+            おやつ休憩。おむつ替え<br>
+            <strong>20〜30分</strong>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">17:00</div>
+        <div class="schedule-content">
+          <div class="schedule-title">休憩3: NEOPASA浜松（上り）</div>
+          <div class="schedule-detail">
+            <span class="spot-tag tag-play">キッズスペース</span> で最後の休憩<br>
+            <strong>20〜30分</strong>
+          </div>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">18:30</div>
+        <div class="schedule-content">
+          <div class="schedule-title">名古屋 到着</div>
+          <div class="schedule-detail">お疲れさまでした</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESERVATIONS -->
+  <div class="reserve-section">
+    <div class="reserve-title">要予約リスト</div>
+
+    <div class="reserve-item">
+      <span class="reserve-name">ラサーラ葉山（3/26夜）</span>
+      <span class="reserve-when">メール予約</span>
+      <span class="reserve-status status-urgent">すぐ予約</span>
+    </div>
+    <div class="reserve-item">
+      <span class="reserve-name">COCO-HOUSE 葉山店（3/26昼）</span>
+      <span class="reserve-when">電話</span>
+      <span class="reserve-status status-urgent">すぐ予約</span>
+    </div>
+    <div class="reserve-item">
+      <span class="reserve-name">御成不動産（3/25 9:00〜）</span>
+      <span class="reserve-when">電話</span>
+      <span class="reserve-status status-soon">早めに</span>
+    </div>
+    <div class="reserve-item">
+      <span class="reserve-name">コスモスインター鎌倉校（3/25 11:00〜）</span>
+      <span class="reserve-when">★予約済</span>
+      <span class="reserve-status status-ok">確定</span>
+    </div>
+    <div class="reserve-item">
+      <span class="reserve-name">葉山インター 見学（3/26 10:00〜）</span>
+      <span class="reserve-when">★予約済</span>
+      <span class="reserve-status status-ok">確定</span>
+    </div>
+    <div class="reserve-item">
+      <span class="reserve-name">油壺京急マリーナ 見学（3/27午後）</span>
+      <span class="reserve-when">電話</span>
+      <span class="reserve-status status-ok">前日まで</span>
+    </div>
+    <div class="reserve-item">
+      <span class="reserve-name">佐島マリーナ 見学（3/27午後）</span>
+      <span class="reserve-when">電話</span>
+      <span class="reserve-status status-ok">前日まで</span>
+    </div>
+  </div>
+
+  <!-- SCHOOLS -->
+  <div class="school-section">
+    <div class="school-section-title">見学する小学校（公立4校 + インター2校）</div>
+
+    <div class="school-card">
+      <div class="school-name">稲村ヶ崎小学校 <span class="school-city city-kamakura">鎌倉</span></div>
+      <div class="school-info">
+        222人 / 各学年1〜2組 / 口コミ 5.00<br>
+        総合ランキング1位。小規模+自然体験。もち米栽培、磯遊び、縦割り班。海近い<br>
+        <strong>3/25 午前に学区散策</strong>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name">七里ヶ浜小学校 <span class="school-city city-kamakura">鎌倉</span></div>
+      <div class="school-info">
+        288人 / 小規模 / 高所得学区上位<br>
+        海と広町の森。PTA不要の独自運営。文化的な家庭が多い<br>
+        <strong>3/25 午前に学区散策</strong>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name">一色小学校 <span class="school-city city-hayama">葉山</span></div>
+      <div class="school-info">
+        517人 / 御用邸エリア / 文化的家庭ランキング1位<br>
+        一色海岸「世界ベスト100」。高所得層・文化人が多い。特別支援も充実<br>
+        <strong>3/27 午前に学区散策</strong>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name">長柄小学校 <span class="school-city city-hayama">葉山</span></div>
+      <div class="school-info">
+        542人 / 先進教育ランキング1位<br>
+        2025年〜小中一貫教育先行。9年間の探究学習。プログラミング先進的<br>
+        <strong>3/27 午前に学区散策</strong>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name">コスモスインターナショナルスクール 鎌倉校 <span style="font-size:10px;background:#00695c;color:white;padding:1px 6px;border-radius:8px;">インター</span></div>
+      <div class="school-info">
+        1歳〜6歳 / オールイングリッシュ / 鎌倉市雪ノ下<br>
+        17年以上の実績。プログラミング教育あり<br>
+        <strong>3/25 11:00〜 見学 ★予約済</strong>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name">葉山インターナショナルスクール <span style="font-size:10px;background:#00695c;color:white;padding:1px 6px;border-radius:8px;">インター</span></div>
+      <div class="school-info">
+        2歳〜12歳 / 送迎バスあり / 保育無償化対象<br>
+        「Play, Think and Learn」。年間約130〜150万円<br>
+        <strong>3/19 午後に見学</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARINAS -->
+  <div class="marina-section">
+    <div class="marina-section-title">見学するマリーナ（2箇所）</div>
+
+    <div class="marina-card">
+      <div class="marina-name">油壺京急マリーナ（三浦市）</div>
+      <div class="marina-price">24ft: 年82万円 / 月6.8万円</div>
+      <div class="marina-info">
+        相模湾・東京湾どちらもアクセス可。施設充実。バランス型<br>
+        <a href="https://www.aburatsubo-kqmarina.com/" style="color:var(--primary)">公式サイト</a>
+      </div>
+    </div>
+
+    <div class="marina-card">
+      <div class="marina-name">佐島マリーナ（横須賀市）</div>
+      <div class="marina-price">陸置(屋外): 年72万円〜 / 月6万円〜　陸置(艇庫内): 年100万円〜</div>
+      <div class="marina-info">
+        22tガントリークレーン完備。陸置で塩害軽減。出船時に上下架が必要<br>
+        天神島（磯遊びスポット）が徒歩1分。子連れでも楽しめる<br>
+        <a href="https://www.sajimamarina.com/harbor/marina/boat_price" style="color:var(--primary)">公式サイト</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>補足メモ</strong><br>
+    - 小学校は公立のため予約不要（学区の街歩きで雰囲気を見る）。校内見学は事前に学校へ電話<br>
+    - インターは鎌倉山（モンテッソーリ・主体的学び）+ 葉山（自然体験・Play Think Learn）の2校を見学<br>
+    - マリーナ見学は家族で。油壺→荒井浜/横堀海岸、佐島→天神島で磯遊びできる<br>
+    - 3市町とも学校選択制なし。希望校に通うには学区内に住む必要あり<br>
+    - インター見学は両方とも決まった見学日なし。事前予約制で随時
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="school-section" style="margin-top:16px">
+    <div class="school-section-title" style="color:var(--primary);border-bottom-color:var(--primary-light)">連絡先一覧（予約用）</div>
+
+    <div class="school-card">
+      <div class="school-name" style="color:var(--accent)">御成不動産（鎌倉・賃貸）</div>
+      <div class="school-info">
+        TEL: <a href="tel:0467-22-5501" style="color:var(--primary);font-weight:700">0467-22-5501</a><br>
+        鎌倉市御成町13-22（鎌倉駅西口 徒歩2分）<br>
+        営業 9:00〜17:00 / 火・祝休（不定休水あり→要電話確認）<br>
+        鎌倉40年の老舗。シャーメゾンショップ加盟。賃貸に強い<br>
+        <a href="https://www.onari-fudousan.jp/" style="color:var(--primary)">公式サイト</a>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name" style="color:var(--accent)">COCO-HOUSE 葉山店（葉山・賃貸）</div>
+      <div class="school-info">
+        TEL: <a href="tel:046-876-6013" style="color:var(--primary);font-weight:700">046-876-6013</a><br>
+        葉山町長柄1583-17<br>
+        営業 10:00〜19:00 / 火水休<br>
+        ファミリー移住実績豊富。鎌倉もカバー<br>
+        <a href="https://www.coco-h.com/" style="color:var(--primary)">公式サイト</a>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name" style="color:#00695c">葉山インターナショナルスクール</div>
+      <div class="school-info">
+        TEL: <a href="tel:046-855-5112" style="color:var(--primary);font-weight:700">046-855-5112</a><br>
+        横須賀市秋谷4427-1 / 見学は事前予約制（随時）<br>
+        メール: contact@hayama-international.co.jp<br>
+        <a href="https://hayama-international.co.jp/apply/trial/" style="color:var(--primary)">見学申込フォーム</a>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name" style="color:#00695c">コスモスインターナショナルスクール 鎌倉校 ★予約済</div>
+      <div class="school-info">
+        TEL: <a href="tel:0467-55-5323" style="color:var(--primary);font-weight:700">0467-55-5323</a><br>
+        鎌倉市雪ノ下636-10 / 3/25 11:00〜見学<br>
+        <a href="https://cosmos-sch.com/" style="color:var(--primary)">公式サイト</a>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name" style="color:var(--primary)">油壺京急マリーナ</div>
+      <div class="school-info">
+        TEL: <a href="tel:046-882-2720" style="color:var(--primary);font-weight:700">046-882-2720</a><br>
+        三浦市三崎町小網代1286<br>
+        営業 9:00〜18:00（3月）/ 火曜定休 / 見学は電話で事前確認<br>
+        <a href="https://www.aburatsubo-kqmarina.com/" style="color:var(--primary)">公式サイト</a>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name" style="color:var(--primary)">佐島マリーナ</div>
+      <div class="school-info">
+        TEL: <a href="tel:046-856-0114" style="color:var(--primary);font-weight:700">046-856-0114</a><br>
+        横須賀市佐島3-7-4<br>
+        ハーバー営業 9:00〜17:00 / 見学は電話で事前確認<br>
+        <a href="https://www.sajimamarina.com/" style="color:var(--primary)">公式サイト</a>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name" style="color:#999">【予備】エイブル鎌倉店（鎌倉・賃貸）</div>
+      <div class="school-info">
+        TEL: <a href="tel:0467-22-3811" style="color:var(--primary);font-weight:700">0467-22-3811</a><br>
+        鎌倉市御成町11-29（鎌倉駅 徒歩3分）<br>
+        営業 10:00〜18:30 / 年中無休<br>
+        御成不動産が水曜休みだった場合の代替<br>
+        <a href="https://shop.able.co.jp/000000573/" style="color:var(--primary)">公式サイト</a>
+      </div>
+    </div>
+
+    <div class="school-card">
+      <div class="school-name" style="color:var(--accent)">ラサーラ葉山（ディナー）</div>
+      <div class="school-info">
+        メール予約のみ（住所は予約後に開示）<br>
+        完全貸切イタリアン。キッズコースあり<br>
+        <a href="https://lasalahayama.jp/" style="color:var(--primary)">公式サイト（予約もこちらから）</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  鎌倉・葉山 下見旅行プラン / 2026年3月24日〜28日
+</div>
+
+</body>
+</html>
